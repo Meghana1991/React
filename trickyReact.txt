@@ -1,0 +1,131 @@
+1)Babel is preprocessor used to detect the html code in the javascript file and parse it.
+2)React can render the components or HTML tags using the
+  ReactDOM.render(<Component>,where?)
+  ReactDOM.render(<App />,document.getElementById("root"))
+
+33)DOM RENDERING -
+
+- React's render() DOESNOT render the HTML/JSX to the real DOM instead it updates in the virtual dom.The render() function's code doesnot hit the real dom directly. Again on top of it we can stil handle the changes of the render()'s virtual dom's updation or not using shouldComponentUpdate
+
+-render() when called compares previous or old virtual dom with the new virtual dom which is just formed by render function. It compares and checks if anything is changed in virtual doms, if yes then only it modifies the real dom
+
+-The virtual dom is just dom representation in the javascript.It keeps both the virtual doms in the javascript only.The elements are all represented in the pure javascript. These virtual doms are compared and if the difference exists then the real dom is updated
+
+-The rerendering after javascript virtual doms comparison again rerender COMPLETE real dom BUT does only those which are changed based on the difference example if button text changes then it updates only button text instead of rerendering the button
+
+3)The component App should return some html code always. Any component is expected to do this.
+4)Whatevr HTML code writen inside the render() will be internally converted to React.createElement. Check files for example
+5)The JSX expects the element to have className instead class. The reason being that the JSX converts the HTML to react element internally in the javascript and the keyword class is reserved word in javascript so we need to use className
+6)The JSX expects the element we are defining to be under root tag and not like siblings
+
+34)JSX is javascript so inorder to have multiple adjacent tags WITHOUT HAVING to be under same div, can be handled like [el1,el2]
+
+35)ANother way of doing it is by using a wrapper component which just wraps and does nothing
+
+36)Another way from React 16 Onwards is by using REACT.fragment. Wrapping the elements in the React.fragment or just fragment tag
+
+37)If you want to have the element with the style or className then use a wrapper like Auxillary component that picks up the props as the classname of actual component and assigns to children returned
+
+7)By using ES6 we can get access to this keyword
+8)React considers div as HTML whereas Div as custom component. Hence we need to give custom component with Caps at first letter
+9)When creating components, you have the choice between two different ways:
+
+Functional components (also referred to as "presentational", "dumb" or "stateless" components - more about this later in the course) => const cmp = () => { return <div>some JSX</div> } (using ES6 arrow functions as shown here is recommended but optional)
+
+class-based components (also referred to as "containers", "smart" or "stateful" components) => class Cmp extends Component { render () { return <div>some JSX</div> } } 
+
+13)props
+The props are basically the object form of custom tag which is in HTML. Here we get all the attributes given to the tag along with the children elements
+
+11)In regular javascrpt the variables are present in the class with var or let form. In this class which extends from component will have the variables in the form of state which is reserved keyword
+
+12)Beauty of the state is that the react will re render the dom on change of state. Anything you change in state, the dom render happens by react trigger
+
+props  and state  are CORE concepts of React. Actually, only changes in props  and/ or state  trigger React to re-render your components and potentially update the DOM in the browser (a detailed look at how React checks whether to really touch the real DOM is provided in section 6).
+
+props  allow you to pass data from a parent (wrapping) component to a child (embedded) component.
+
+14)We should not change the state directly by accessing it instead react provides us setState methos to modify state or props
+
+14.5)Javascript inside the JSX is written inside {} always whether it is condition or is a variable binding or a state anything
+
+15)React always watches for state or props and compares the old to new value and changes in the DOM
+16) The state and setState comes along with Component extends which works only for class based
+17)One can pas methods and vars to the custom tag / component
+18)One cannot access state inside the function code
+19)https://stackoverflow.com/questions/34361379/are-arrow-functions-and-functions-equivalent-exchangeable
+20)render() gets called everytime the dom is rendered.
+21)writing the if cond inside the JSX is not allowed as it accepts only simple statements
+22)Map transforms a particular array into something else
+23)React generally re renders everything in the DOM, its good to mention a KEY property which tells React to keep track and CHANGE only when CHANGE is seen and not re render always to dom
+24)Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity
+25)React Developer Tools is the extension used for debugging
+26)ErrorBoundries for error or exception handling like api call failures etc
+27)The literal difference before React 16 is that one has state, and the other doesn't. That means the stateful components are keeping track of changing data, while stateless components print out what is given to them via props, or they always render the same thing. Notice the stateless component is written as a function.
+28)Now the stataful components are not just class but can be anything that manages state and stateless are not always functional component in React 16+. Even functional component can manage state in React 16+. But functional component are usually presentational which doesnot manage state and are for showing in ui for fancy
+29)state and props both can be used in the class component.
+30)Component Lifecycle as name suggests comes only in the Class based. In functional however you should be using react hooks there
+https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/13585862#overview
+31)LifeCycle Create
+  constructor
+    > getDerivedStateFromProps
+      > render
+        > child components
+          > componentDidMount
+32)getDerivedStateFromProps is invoked right before calling the render method, both on the initial mount and on subsequent updates. It should return an object to update the state, or null to update nothing.Very rarely used
+33)componentDidMount() is invoked immediately after a component is mounted (inserted into the tree). Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
+
+This method is a good place to set up any subscriptions. If you do that, don’t forget to unsubscribe in componentWillUnmount().
+
+You may call setState() immediately in componentDidMount(). It will trigger an extra rendering, but it will happen before the browser updates the screen. This guarantees that even though the render() will be called twice in this case, the user won’t see the intermediate state. Use this pattern with caution because it often causes performance issues. In most cases, you should be able to assign the initial state in the constructor() instead. It can, however, be necessary for cases like modals and tooltips when you need to measure a DOM node before rendering something that depends on its size or position.
+34)shouldComponentUpdate - it allows to stop the updating process on change of props or state
+This method only exists as a performance optimization. Do not rely on it to “prevent” a rendering, as this can lead to bugs. Use shouldComponentUpdate() to let React know if a component’s output is not affected by the current change in state or props. The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
+35)React hooks are a new way (still being developed) to access the core features of react such as state without having to use classes, in your example if you want to increment a counter directly in the handler function without specifying it directly in the onClick prop, you could do something like:
+...
+const [count, setCounter] = useState(0);
+const [moreStuff, setMoreStuff] = useState(...);
+...
+const setCount = () => {
+    setCounter(count + 1);
+    setMoreStuff(...);
+    ...
+};
+and onClick:
+
+<button onClick={setCount}>
+    Click me
+</button>
+36)useEffect - is a react hook which combines componentDidMount and ComponentDidUpdate
+Here it gets called on every render. Whenever the virtual DOM changes, the render gets called. Here you can call BE calls.
+27)Differences between componentDidMount and ComponentDidUpdate
+componentDidMount()
+
+componentDidMount() is invoked immediately after a component is mounted. Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request. Setting state in this method will trigger a re-rendering.
+
+componentDidUpdate()
+
+componentDidUpdate() is invoked immediately after updating occurs. This method is not called for the initial render.
+
+the DOM is available and - componentDidMount
+properties got changed - componentDidUpdate
+
+If you’re familiar with React class lifecycle methods, you can think of useEffect Hook as componentDidMount, componentDidUpdate, and componentWillUnmount combined.
+28)useEffect = componentDidMount + componentDidUpdate
+First time - componentDidMount
+Any change - componentDidUpdate
+
+I want to useEffect only on certain property change 
+28)componentWillUnmount is used whenever you want to do some action right before the component is removed.
+usually clean up work will be done in this cycle. As mentioned above we can use useEffect for the same reason with function. Check example
+
+29)Whenever the portion of DOM changes like may be some content change, then the entire render() gets called which is needless and to avoid it we have shouldComponentUpdate and used mainly for class comps
+
+30)Another way to do it is by using react.memo() for functional components
+
+31)shouldComponentUpdate can be used when a certain property in the props of certain component check is present. If the entire props should be checked then use PureComponent which checks the complete props check instead of single property in prop.
+
+32)Assume that there is a prop like prop.persons. 
+if(nextProps.persons !== prop.persons)
+Means that the props.person is a pointer in memory location as it is a variable.If anything changes in the mem loc then the trigger happens
+
+38)DOM manipulation like may be focus input element or modify the text of label element or doing anything in the element html level is by using the refs
