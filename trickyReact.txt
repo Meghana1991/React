@@ -129,3 +129,13 @@ if(nextProps.persons !== prop.persons)
 Means that the props.person is a pointer in memory location as it is a variable.If anything changes in the mem loc then the trigger happens
 
 38)DOM manipulation like may be focus input element or modify the text of label element or doing anything in the element html level is by using the refs
+
+39)When we pass props to the components where we might chain it like passing to component C from A via B where B would not be using the props.
+
+40)So to overcome the above problem we will use the context. It is like a you can pass the context variable across multiple components (like angular services)
+
+41)Running npm run eject copies all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them.
+
+42)Components are the ones which are presentational purpose only whereas the containers are the ones which are meant for stateful components. Both cases irrespective of the class or hooks
+
+43)Layout folder is a presentational purpose hence place it in the Components
