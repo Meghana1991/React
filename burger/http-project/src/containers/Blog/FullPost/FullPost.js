@@ -13,16 +13,17 @@ class FullPost extends Component {
         post: []
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         // console.log('componentDidUpdate Order 2')
+        console.log(this.props)
         /**
          * Updating the state will cause the react to update which inturn
          * calls the componentDidUpdate and then again the get call
          * which will make it infinite loop
          * Inorder to avoid this, we can add this condition
          */
-        if (!this.state.post || (this.state.post && this.state.post.id !== this.props.id)) {
-            axios.get('/posts' + this.props.id)
+        if (this.props.match.params.id) {
+            axios.get('/posts/' + this.props.match.params.id)
                 .then((response) => {
                     this.setState({ post: response.data })
                 })

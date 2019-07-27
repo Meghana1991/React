@@ -141,3 +141,44 @@ Means that the props.person is a pointer in memory location as it is a variable.
 43)Layout folder is a presentational purpose hence place it in the Components
 
 44)Axios is a lightweight HTTP client based similar to a Fetch API. Axios is promise-based async/await library for the readable asynchronous code. We can easily integrate with React.js, and it is effortless to use in any frontend framework.
+
+45)React doesnot have any router included inside. We need to install separate package not inside box.
+
+46)BrowserRouter will enable the routing so we need to wrap the base component with it in App.js
+
+47)The same route can be having multiple data. Like the / can be rendering multiple Components
+Also the data for route / matches all the routes. Hence we need to make it exact which means only for /. Like pathMatch = full in angular
+
+48)The router can still work with the <a href> but the problem comes as it will reload the page.
+To avoid the default behavior the <a href> to be replaced with <Link> which accepts 'to' which can be either a string or a object
+
+49)Whenever the route occurs the component which is loaded will have some information like the path and other params which will be present in props
+
+50)In case of angular, the routeParams subscriptions can be got only if the route has occured in routeconfig. In react the props will have those information in props if it is routed from <Route> almost same like angular. In case you have component which renders another component where still you would like to have the route information, then we need to use simple props to pass it to the child component in the props. Another approach would be withRouter which is a hoc
+
+51)Absolute Path - will always attach the route we have given to the Domain like 
+example.com/my-route
+If my current path is example.com/detail/new-post and when i use absolute path it will add to example.com/new-post omitting the detail.
+
+52)The route to="/:id" means anything after the / will be falling in this route. Assume that there is to="/some-post" which will also come under this. Temporary solution is to place the to="/some-post" first and then the "/:id" as the parsing happens from top to bottom
+
+54)The /:id and /something will always load its contents. Both would be loaded when url hits. To overcome this we need to use Switch will tells React router to always consider the each route as unique and consider the first occurance always. Here the order matters a lot.
+
+55)We can navigate to a particular route using <Link to> or by programmatic way.
+
+56)Nested Routes are usually like child routes in angular.But here we define it inside the place where it is supposed to render
+
+57)There are multiple ways to redirect
+             * 1) Use the below method where Redirect tag is used
+             * 2) Use this.props.history.push method
+Redirect replaces the page, when user clicks browser back, it doesnot take u to back page
+The history push will just push the page to the stack which will go to back page 
+ANother way of making the history push work like redirect is by using history replaced
+
+58)Lazy Loading means loading the components only when the route is hit and to avoid loading of complete application load.
+
+59)Lazy loading can be implemented in React 16 by dynamically importing the module in the file.
+
+60)Whenever the request goes to server, the server should give back index html always because there are scenarios where /posts would obviously not be known to server and it will result in the 404 error. Server should return index if the route is not found as it is a SPA so
+
+61)If the application is hosted in the example.com, then good. If example.com/my-app then we should tell the react from where the application should begin. We need to define this in the router in BrowserRouter basename="/my-app"

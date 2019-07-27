@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Redirect } from 'react-router-dom'
 import './NewPost.css';
 import axios from 'axios';
 
@@ -7,7 +7,8 @@ class NewPost extends Component {
     state = {
         title: 'd',
         content: 'qw',
-        author: 'Max'
+        author: 'Max',
+        submitted: false
     }
 
     postDataHandler() {
@@ -18,13 +19,25 @@ class NewPost extends Component {
         };
         axios.post('/posts', myObj).then((response) => {
             console.log('postresponse', response)
+            /**
+             * There are multiple ways to redirect
+             * 1) Use the below method where Redirect tag is used
+             * 2) Use this.props.history.push method
+             */
+            // this.setState({ submitted: true })
+            this.props.history.push('/posts')
         })
     }
 
     render() {
         console.log('render')
+        let redirect;
+        if (this.state.submitted) {
+            redirect = <Redirect to="/"></Redirect>
+        }
         return (
-            <div className="NewPost">
+            < div className="NewPost" >
+                {redirect}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} />
@@ -36,7 +49,7 @@ class NewPost extends Component {
                     <option value="Manu">Manu</option>
                 </select>
                 <button onClick={() => this.postDataHandler()}>Add Post</button>
-            </div>
+            </div >
         );
     }
 }
