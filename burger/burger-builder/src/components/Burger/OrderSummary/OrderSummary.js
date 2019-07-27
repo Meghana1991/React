@@ -13,7 +13,9 @@ const OrderSummary = (props) => {
             {props.buttonClicked ?
                 (< div >
                     <ul>
-                        <Modal cancelHandler={props.cancelHandler}>{builtSummary}</Modal>
+                        <Modal
+                            cancelHandler={props.cancelHandler}
+                            continueHandler={props.continueHandler}>{builtSummary}</Modal>
                     </ul>
                 </div>) : ''}
         </Aux>

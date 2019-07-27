@@ -7,7 +7,7 @@ const Modal = (props) => {
         <div className="Modal">
             {props.children}
             <Button btnClick={props.cancelHandler}>CANCEL</Button>
-            <Button>CONTINUE</Button>
+            <Button btnClick={props.continueHandler}>CONTINUE</Button>
         </div>
     )
 }
