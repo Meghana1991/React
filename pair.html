@@ -1,0 +1,20 @@
+<html>
+<script>
+    function pair(arr) {
+        let obj = {}
+        for (let i = 0; i < arr.length; i++) {
+            let j = 0;
+            if (obj[arr[i]]) {
+                obj[arr[i]] = ++obj[arr[i]]
+            } else {
+                obj[arr[i]] = ++j
+            }
+        }
+        return obj
+    }
+
+    let pairObj = pair([1, 2, 2, 2, 1, 4, 5, 5, 6, 2])
+    console.log(pairObj)
+</script>
+
+</html>
