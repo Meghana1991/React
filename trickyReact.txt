@@ -182,3 +182,25 @@ ANother way of making the history push work like redirect is by using history re
 60)Whenever the request goes to server, the server should give back index html always because there are scenarios where /posts would obviously not be known to server and it will result in the 404 error. Server should return index if the route is not found as it is a SPA so
 
 61)If the application is hosted in the example.com, then good. If example.com/my-app then we should tell the react from where the application should begin. We need to define this in the router in BrowserRouter basename="/my-app"
+
+62)Check for routing module for routing example
+
+63)Redux is used for state management or store management of data. In redux we store data in centralised format. We can achieve it in simple javascript by global variables but the problem is the react doesnot detect all javascript related changes
+
+64)Store is a gaint javascript object which stores the entire application state.
+
+65) From the component we will request for store change, so we will dispatch an action. The reducer present in the store will check for the action and then modify the store as per the request. In all the areas where the store value is used would change, hence we need to subscribe and listen it
+
+66)To use react-redux, install it and use Provider tag to enclose app component.
+
+67)Each component would have connect() which will have params like which part slice of state to modify and which actions are going to be displayed by component
+
+68)connect accepts multiple args where the first stands for the piece of state to be listened to and next will be the fn to dispatch
+
+69)in Reducer, we are using arr.concat instead of arr.push because push manipulates the original array where as the concat creates a new array with copy of the contents
+
+70)When application gets bigger, we need to have multiple reducers. In that case we would be combining them all using combineReducers from redux
+
+71)Steps to use redux
+  - Install redux and react-redux
+  
