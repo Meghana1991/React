@@ -1,0 +1,8 @@
+Finish Udemy React tutorials on redux on build
+Pick this and https://daveceddia.com/react-practice-projects/
+Refer github projects code
+
+Thursday > 17, 18, 19
+Friday >21,22
+Saturday > 23,24,25,26,27
+Sunday > 28,29,30
