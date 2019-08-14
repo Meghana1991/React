@@ -204,3 +204,45 @@ ANother way of making the history push work like redirect is by using history re
 71)Steps to use redux
   - Install redux and react-redux
   
+72)Middleware is to provides a third-party extension point between dispatching an action, and the moment it reaches the reducer
+
+73)Middleware will get the input (which might be action) and works on it and then returns the action. It is like interceptor.
+The reducer function has to run synchronously
+
+74)There is no way u can call api in the reducer generally but if you use action creators u can create async calls
+
+75)Middleware are used to do some action during the dispatch and action.One needs to import applyMiddleware inorder to achieve Middleware.
+
+76)The reducers are synchronous and all lines execute in synchronous way in Middleware.Inorder to make reducer work asynchronous way or make the reducer make API call, we need to install thunk.
+
+77)The below code in HTML will be as
+<h1>Shopping List for {props.name}</h1>
+  <ul>
+    <li>Instagram</li>
+    <li>WhatsApp</li>
+    <li>Oculus</li>
+  </ul>
+
+React.createElement("h1",null, "Shopping List", props.name),React.createElement("ul",null,React.createElement("li",null,"Instagram"),React.createElement("li",null,"WhatsApp"),React.createElement("li",null,"Oculus")));
+
+78)Virtual DOM is something which is created by react which is lightweight representation of the real DOM. React DOM is used to render the HTML code or the custom component code in to the real dom
+
+79)Extends vs Implement. Implement is used for interface where one has to follow strict rule of having same functions and variables as in the interface. Extends will create a child copy of parents which is inheritance
+
+80)Object destructuring -
+
+this.state.count === 0? 'Zero' : this.state.count
+
+can be written as
+
+//pick the count property and store it in variable count
+{ count } = this.state
+count === 0? 'Zero' : count
+
+81)The jsx html code gets compiled to React.createElement Object. Hence we cannot use reserved words like class etc inside JSX
+
+82)true && false > false
+true && 'Hi' > Hi
+true && 'Hi' && 1 > 1
+
+The result will be final truthy operand
