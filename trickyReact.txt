@@ -3,6 +3,8 @@
   ReactDOM.render(<Component>,where?)
   ReactDOM.render(<App />,document.getElementById("root"))
 
+3)A Component which owns the state should be the one modifying it.
+
 33)DOM RENDERING -
 
 - React's render() DOESNOT render the HTML/JSX to the real DOM instead it updates in the virtual dom.The render() function's code doesnot hit the real dom directly. Again on top of it we can stil handle the changes of the render()'s virtual dom's updation or not using shouldComponentUpdate
@@ -246,3 +248,69 @@ true && 'Hi' > Hi
 true && 'Hi' && 1 > 1
 
 The result will be final truthy operand
+
+83)this object with below scenarios
+Scenario 1 - Function inside Object Scenario
+
+var some1 = { 
+	name : 'manj',
+	ageFun : function(){ 
+    console.log('func called', this) 
+    }
+}
+
+some1.ageFun();
+//func called {name: "manj", ageFun: ƒ}
+
+Scenario 2 - Stand Alone Function Scenario
+
+function som() { console.log(this) }
+//Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
+
+If strict mode is enabled then the standalone function then this returns undefined
+
+84)In some cases you might have a scenario where the this object wont be available to use in the standalone function. In such cases we will use .bind(this) whereever the this object is available. Generally the constructor will have acess to the this keyword
+
+constructor() {
+        super()
+        console.log('From constructor', this)
+        this.handleIncrement = this.handleIncrement.bind(this)
+}
+
+handleIncrement() {
+    console.log('Stand alone', this)
+}
+
+OR
+
+handleIncrement = () => {
+    console.log('Stand alone', this)
+}
+
+Here the below approach is simpler and the arrow approach is best used because the this object is inherited by arrow function syntax.
+
+Arrow functions don't have their own this or arguments binding. Instead, those identifiers are resolved in the lexical scope like any other variable. That means that inside an arrow function, this and arguments refer to the values of this and arguments in the environment the arrow function is defined in (i.e. "outside" the arrow function):
+
+85)setState comes from Component class.
+
+86)The events like onClick or onKey should be pased with a function reference.
+
+onClick={this.handleIncrement}
+
+If i have to pas args then I CANT DO THIS as reference should be passed
+
+onClick={this.handleIncrement()}
+
+To overcome the scenario
+
+onClick={() => { this.handleIncrement(param) }
+
+87)props are readonly where as state can be changed
+
+88)Awesome Approach for deleting
+
+delete the record with counterId = 2
+
+const counters = this.state.counters.filter(c => c.id !== counterId)
+
+89)whenever we are NOT dealing with state in a component then make such components as stateless ie function type
