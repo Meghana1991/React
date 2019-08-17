@@ -28,8 +28,8 @@ const mapStoreToProps = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSource: (src) => dispatch({ type: actionTypes.SOURCE, payload: src }),
-        onDest: (dest) => dispatch({ type: actionTypes.DESTINATION, payload: dest }),
+        onSource: (src) => dispatch(actionTypes.source(src)),
+        onDest: (dest) => dispatch(actionTypes.destination(dest)),
     }
 }
 

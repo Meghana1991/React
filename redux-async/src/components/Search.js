@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionTypes from './../store/action'
+import { search } from './../store/action'
 
 class Search extends Component {
     render() {
@@ -20,7 +20,7 @@ const mapStoreToProps = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSearch: (searchTxt) => dispatch({ type: actionTypes.SEARCH, payload: searchTxt }),
+        onSearch: (searchTxt) => dispatch(search(searchTxt)),
     }
 }
 

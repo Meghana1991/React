@@ -2,9 +2,9 @@ import * as actionTypes from './action'
 
 let initialState = {
     trains: [
-        { code: 'RAJ120', name: 'Rajdhani', src: 'Bangalore', dest: 'Mysore', status: 'Available' },
-        { code: 'SHA120', name: 'Shatabdi', src: 'Mysore', dest: 'Bangalore', status: 'Full' },
-        { code: 'JAN120', name: 'Janata', src: 'Tirupati', dest: 'Bangalore', status: 'Available' },
+        // { code: 'RAJ120', name: 'Rajdhani', src: 'Bangalore', dest: 'Mysore', status: 'Available' },
+        // { code: 'SHA120', name: 'Shatabdi', src: 'Mysore', dest: 'Bangalore', status: 'Full' },
+        // { code: 'JAN120', name: 'Janata', src: 'Tirupati', dest: 'Bangalore', status: 'Available' },
     ]
 }
 
@@ -14,31 +14,14 @@ const reducer = (state = initialState, action) => {
             return;
         case 'REMOVE_PASSENGERS':
             return;
-        case actionTypes.FETCHBYCODE:
-            state = initialState
-            if (action.payload) {
-                let replica = { ...state }
-                let filteredTrains = replica.trains.filter((train) => {
-                    if (train.code.toUpperCase().indexOf(action.payload.toUpperCase()) !== -1) {
-                        return train;
-                    }
-                })
-                // return {
-                //     ...state,
-                //     trains: {
-                //         ...state.trains,
-                //         filteredTrains
-                //     }
-                // }
-                return {
-                    ...state,
-                    trains: filteredTrains
-                }
-
-            } else {
-                return state
+        case actionTypes.INITIALSTATE:
+            return {
+                ...state,
+                trains: action.payload
             }
-
+        case actionTypes.FETCHBYCODE:
+            console.log('async in the actionCreator')
+            return { ...state };
         case actionTypes.SEARCH:
             state = initialState
 
@@ -91,7 +74,8 @@ const reducer = (state = initialState, action) => {
             }
         default: {
             state = initialState;
-            return state;}
+            return state;
+        }
     }
 }
 

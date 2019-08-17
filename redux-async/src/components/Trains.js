@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SourceDestination from './SourceDestination'
+import SourceDestination from './SourceDestination';
+import * as actionTypes from './../store/action'
 
 const spanTrainStyle = {
     fontSize: '16px',
@@ -17,6 +18,7 @@ const srcDest = {
 
 class Trains extends Component {
     componentDidMount() {
+        this.props.oninitialState()
         console.log('Trains', this.props.trns)
     }
     navigateToForm(train) {
@@ -54,7 +56,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        /**
+         * Fetch The Initial State From Backend
+         */
+        oninitialState: () => dispatch(actionTypes.initialState())
     }
 }
 

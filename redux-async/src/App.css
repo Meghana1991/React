@@ -54,3 +54,14 @@
   text-align: center;
   padding: 4px
 }
+
+.train-about{
+  border: 2px solid #E2E2E2;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #e2e2e2
+}
+
+.train-about span{
+  font-size: 16px 
+}
