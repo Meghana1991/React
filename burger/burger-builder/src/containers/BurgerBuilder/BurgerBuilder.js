@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Aux from '../../hoc/Auxillary/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import OrderSummary from './../../components//Burger/OrderSummary/OrderSummary'
@@ -61,7 +60,7 @@ class BurgerBuilder extends Component {
 
     render() {
         return (
-            <Aux>
+            <div>
                 <OrderSummary
                     cancelHandler={this.cancelHandlerFn}
                     buttonClicked={this.state.isButtonClicked}
@@ -74,7 +73,7 @@ class BurgerBuilder extends Component {
                     // ingredientRemoved={this.removeIngredientHandler}
                     ingredientRemoved={this.props.onIngredientRemove}
                     buttonClicked={this.buttonClicked}></BuildControls>
-            </Aux>
+            </div>
         )
     }
 }

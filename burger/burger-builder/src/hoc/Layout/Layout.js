@@ -1,5 +1,4 @@
 import React from 'react';
-import Aux from '../Auxillary/Aux';
 import './Layout.css'
 /**
  * Let us make the Layout component as a wrapper
@@ -7,12 +6,12 @@ import './Layout.css'
  */
 const Layout = (props) => {
     return (
-        <Aux>
+        <div>
             <div>Toolbar, Side Drawer, Backdrop </div>
             <main className="Content">
                 {props.children}
             </main>
-        </Aux>
+        </div>
     )
 }
 

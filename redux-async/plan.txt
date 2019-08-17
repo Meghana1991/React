@@ -1,0 +1,26 @@
+Train Booking
+
+AUTHENTICATION
+Login
+Logout
+
+Home, Trains , My bookings tabs *
+
+home > welcome *
+Trains > trains list with search or src dest place *
+My bookings > history of train bookings
+
+Trains > Select any train and details will come up with CLASSES like
+    - General Coach
+    - Non Sleeper
+    - Sleeper
+    - 1 tier
+    - 2 tier
+    - 3 tier
+    - Senior Citizen
+along with its cost
+
+On select of this > form opens
+    - Src and Dest mentioned
+    Add Passengers > + > Name, age, gender, berth preference
+book now

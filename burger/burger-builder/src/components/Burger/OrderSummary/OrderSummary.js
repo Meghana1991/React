@@ -1,5 +1,4 @@
 import React from 'react';
-import Aux from '../../../hoc/Auxillary/Aux'
 import Modal from './../../UI/Modal/Modal'
 
 const OrderSummary = (props) => {
@@ -9,7 +8,7 @@ const OrderSummary = (props) => {
     });
 
     return (
-        <Aux>
+        <div>
             {props.buttonClicked ?
                 (< div >
                     <ul>
@@ -18,7 +17,7 @@ const OrderSummary = (props) => {
                             continueHandler={props.continueHandler}>{builtSummary}</Modal>
                     </ul>
                 </div>) : ''}
-        </Aux>
+        </div>
     )
 }
 
