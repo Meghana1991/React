@@ -10,7 +10,18 @@ class Form extends Component {
     }
 
     incrementPassengerCnt = () => {
+        /**
+         * To Modify the local state use setState, 
+         * Redux state you can use action
+         */
         this.setState({ ...this.state, passengerCnt: this.state.passengerCnt + 1 })
+    }
+
+    submitHandler = () => {
+        // this.setState({ ...this.state, myBookings: this.state.formData })
+        this.props.onSubmit(this.state.formData)
+        this.props.history.push('/bookings')
+        console.log('submit', this.state.formData)
     }
 
     render() {
@@ -41,7 +52,7 @@ class Form extends Component {
                                 </div><br />
 
                                 <ul>{Array.from(Array(this.state.passengerCnt), (e, i) => {
-                                    return <FormFields id={i} formState={this.state} />
+                                    return <FormFields train={train.name} id={i} formState={this.state} />
                                 })}</ul>
 
                                 <div className="col-md-6 form-group row" >
@@ -49,7 +60,7 @@ class Form extends Component {
                                         <button className="btn btn-primary" onClick={this.incrementPassengerCnt}>Add Passengers</button>
                                     </div>
                                     <div className="col-md-4">
-                                        <button className="btn btn-success">Submit</button>
+                                        <button className="btn btn-success" onClick={this.submitHandler}>Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -69,6 +80,7 @@ const mapStoreToProps = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onFetchByCode: (code) => dispatch(actionTypes.fetchbycode(code)),
+        onSubmit: (data) => dispatch(actionTypes.onSubmit(data)),
     }
 }
 

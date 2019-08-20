@@ -342,3 +342,5 @@ The parent component(s) will have a container for the state of your app (typical
 98)We can however use componentDidMount for API call and once result is recieved then dispatch the action. Sometimes you might need to use action creators inorder to execute the API and thunk Middleware. Either approach can be done. 
 
 99)I want the initialState of the store to have the response of API.The index.js where the store is initialized createStore accepts reducer and initialState as second param. Here we make use of middleware
+
+100)To modify the local state we use setState and to modify the store we use redux action

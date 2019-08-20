@@ -5,7 +5,8 @@ let initialState = {
         // { code: 'RAJ120', name: 'Rajdhani', src: 'Bangalore', dest: 'Mysore', status: 'Available' },
         // { code: 'SHA120', name: 'Shatabdi', src: 'Mysore', dest: 'Bangalore', status: 'Full' },
         // { code: 'JAN120', name: 'Janata', src: 'Tirupati', dest: 'Bangalore', status: 'Available' },
-    ]
+    ],
+    myBookings: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -14,6 +15,11 @@ const reducer = (state = initialState, action) => {
             return;
         case 'REMOVE_PASSENGERS':
             return;
+        case actionTypes.ONSUBMIT:
+            return {
+                ...state,
+                myBookings: action.payload
+            }
         case actionTypes.INITIALSTATE:
             return {
                 ...state,

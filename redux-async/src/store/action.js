@@ -3,6 +3,7 @@ export const SOURCE = 'SOURCE';
 export const DESTINATION = 'DESTINATION';
 export const INITIALSTATE = 'INITIALSTATE';
 export const FETCHBYCODE = 'FETCHBYCODE';
+export const ONSUBMIT = 'ONSUBMIT';
 
 export const search = (payload) => {
     return {
@@ -28,6 +29,13 @@ export const destination = (payload) => {
 export const fetchRes = (payload) => {
     return {
         type: FETCHBYCODE,
+        payload: payload
+    }
+}
+
+export const onSubmit = (payload) => {
+    return {
+        type: ONSUBMIT,
         payload: payload
     }
 }

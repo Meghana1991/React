@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class FormFields extends Component {
     state = {
+        trainName: '',
         id: '',
         name: '',
         age: null,
@@ -9,6 +10,10 @@ class FormFields extends Component {
         gender: ''
     }
 
+    componentDidMount() {
+        console.log('componentdidmount', this.props)
+        this.setState({ ...this.state, trainName: this.props.train })
+    }
     changeHandler = (event) => {
         let key = event.target.name
         this.setState(
@@ -17,7 +22,6 @@ class FormFields extends Component {
                 [key]: event.target.value,
                 id: this.props.id
             })
-        console.log(this.state)
     }
 
     onSave = () => {
@@ -31,7 +35,6 @@ class FormFields extends Component {
             this.props.formState.formData.push(this.state)
 
         }
-        console.log(this.props.formState)
     }
 
     render() {
@@ -64,7 +67,7 @@ class FormFields extends Component {
                     </select>
                 </div>
                 <div className="col-md-6 form-group">
-                    <button style={{'float':'right'}} className="btn btn-success" onClick={this.onSave}>Save</button>
+                    <button style={{ 'float': 'right' }} className="btn btn-success" onClick={this.onSave}>Save</button>
                 </div>
             </div>
         );
