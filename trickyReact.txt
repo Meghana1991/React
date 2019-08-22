@@ -344,3 +344,15 @@ The parent component(s) will have a container for the state of your app (typical
 99)I want the initialState of the store to have the response of API.The index.js where the store is initialized createStore accepts reducer and initialState as second param. Here we make use of middleware
 
 100)To modify the local state we use setState and to modify the store we use redux action
+
+101)reactjs follows some guidelines like WCAG - web content accessibility guidelines which means it is set of rules to be followed for any website for anyone.Web accessibility (also referred to as a11y) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages. WCAG includes some of the rules like alternative text for images, subtitles for video.
+
+Accessible Rich Internet Applications (ARIA) is a set of attributes that define ways to make web content and web applications (especially those developed with JavaScript) more accessible to people with disabilities. 
+
+WAI-ARIA is a spec defining support for accessible web apps. It defines bunch of markup extensions (mostly as attributes on HTML5 elements), which can be used by the web app developer to provide additional information about the semantics of the various elements to assistive technologies like screen readers. Of course, for ARIA to work, the HTTP user agent that interprets the markup needs to support ARIA, but the spec is created in such a way, as to allow down-level user agents to ignore the ARIA-specific markup safely without affecting the web app's functionality.
+WAI-ARIA is an incredibly powerful technology that allows developers to easily describe the purpose, state and other functionality of visually rich user interfaces - in a way that can be understood by Assistive Technology. WAI-ARIA has finally been integrated into the current working draft of the HTML 5 specification.
+
+102)A semantic element clearly describes its meaning to both the browser and the developer.
+Examples of non-semantic elements: <div> and <span> - Tells nothing about its content.
+Examples of semantic elements: <form>, <table>, and <article> - Clearly defines its content.
+https://reactjs.org/docs/accessibility.html

@@ -4,6 +4,9 @@ export const DESTINATION = 'DESTINATION';
 export const INITIALSTATE = 'INITIALSTATE';
 export const FETCHBYCODE = 'FETCHBYCODE';
 export const ONSUBMIT = 'ONSUBMIT';
+export const AUTHSTART = 'AUTHSTART';
+export const AUTHSUCCESS = 'AUTHSUCCESS';
+export const AUTHFAIL = 'AUTHFAIL';
 
 export const search = (payload) => {
     return {
@@ -66,5 +69,39 @@ export const initialState = () => {
             { code: 'JAN120', name: 'Janata', src: 'Tirupati', dest: 'Bangalore', status: 'Available' },]
             dispatch(fetchInitialState(response))
         })
+    }
+}
+
+/**
+ * Authentication Section
+ */
+
+export const authStart = () => {
+    console.log('auth starte')
+    return {
+        type: AUTHSTART,
+    }
+}
+
+export const authSuccess = (authData) => {
+    return {
+        type: AUTHSUCCESS,
+        authData: authData
+    }
+}
+
+export const authFail = (error) => {
+    return {
+        type: AUTHFAIL,
+        error: error
+    }
+}
+
+/**
+ * Async code doing the authentication
+ */
+export const auth = (email, password) => {
+    return dispatch => {
+        dispatch(authStart())
     }
 }
