@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as actionTypes from './../store/action';
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 class SignUpIn extends Component {
 

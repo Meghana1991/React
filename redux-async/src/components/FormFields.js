@@ -10,10 +10,20 @@ class FormFields extends Component {
         gender: ''
     }
 
+    constructor(props) {
+        super(props);
+        // Create a ref to store the textInput DOM element
+        this.ageFocus = React.createRef();
+    }
+
     componentDidMount() {
         console.log('componentdidmount', this.props)
         this.setState({ ...this.state, trainName: this.props.train })
+
+        console.log(this.ageFocus)
+        this.ageFocus.current.focus();
     }
+
     changeHandler = (event) => {
         let key = event.target.name
         this.setState(
@@ -46,7 +56,8 @@ class FormFields extends Component {
                 </div>
                 <div className="col-md-6 form-group" >
                     <label>Age</label>
-                    <input className='form-control' name="age" type="text" placeholder="Enter your Age" onChange={(event) => this.changeHandler(event)} />
+                    <input className='form-control' name="age" type="text" placeholder="Enter your Age" onChange={(event) => this.changeHandler(event)}
+                        ref={this.ageFocus} />
                 </div>
                 <div className="col-md-6 form-group" >
                     <label>Gender</label>

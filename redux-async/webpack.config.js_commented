@@ -1,0 +1,40 @@
+const path = require('path')
+
+module.exports = {
+    // This is the source map for debugging
+    devtool: 'cheap-module-eval-source-map',
+    // This tells where the webpack should start bundling
+    entry: './src/index.js',
+    // Where the output of the webpack should store
+    output: {
+        //here the path.resolve is used to create absolute path and __dirname is taken from the operating system name
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    // The application uses multiple imports but we haven't actually specified what extensions they are
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
+    // Webpack needs to understand the nextgen Js and CSS, hence loaders come into the picture
+    modules: {
+        rules: [
+            // {
+            //     test : /\.js$/,
+            //     loader :,
+            //     exclude: 'node_modules'
+            // },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' }
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/,
+                loader: 'url-loader'
+            }
+        ]
+    }
+}

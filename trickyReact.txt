@@ -356,3 +356,187 @@ WAI-ARIA is an incredibly powerful technology that allows developers to easily d
 Examples of non-semantic elements: <div> and <span> - Tells nothing about its content.
 Examples of semantic elements: <form>, <table>, and <article> - Clearly defines its content.
 https://reactjs.org/docs/accessibility.html
+
+103)When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it:
+
+return(
+  <>
+    <dt>Hi </dt>
+  <>
+)
+
+instead of 
+
+return(
+  <Fragment>
+    <dt>Hi </dt>
+  <Fragment>
+)
+
+104)Refs provide a way to access DOM nodes or React elements created in the render method.In the typical React dataflow, props are the only way that parent components interact with their children. To modify a child, you re-render it with new props. However, there are a few cases where you need to imperatively modify a child outside of the typical dataflow. The child to be modified could be an instance of a React component, or it could be a DOM element. For both of these cases, React provides an escape hatch
+
+return (
+    <input
+      type="text"
+      ref={this.textInput}
+    />
+  );
+
+focus() {
+  // Explicitly focus the text input using the raw DOM API
+  // Note: we're accessing "current" to get the DOM node
+  this.textInput.current.focus();
+}
+
+105)The short story: access of this in a subclass before super() call is not allowed, because in ES6 this is being born in the base class, therefore super() is needed to initialize it.
+super() will calls the constructor of its parent class. This is required when you need to access some variables from the parent class.
+
+106)Webpack is a bundler which minimizes the code size and not just it but also it optimises the images if any used in application.
+
+107)While deploying the application in the internet, we build it using npm build and then make the server serve the index.html from the build/ folder. 
+
+108)The Webpack bundles the files in such way that they are bundled  in orderly manner. However we should mention entryPoint from where it should start bundling. We usually give single entry point like app.js
+
+109)Webpack Steps
+
+npm install --save-dev webpack webpack-dev-server
+
+These are dev dependencies hence --save-dev
+
+We need to make the webpack understand the jsx and convert it to javascript and other css minifying
+
+110)A script has to  be executed to initiate webpack. In package.json there is script where the command should be present corresponding to the webpack-dev-server which then tries to find webpack.config.ts file for commands on seeing the script command webpack-dev-server
+
+All the imports of css related links will be replaced with styles directly in index file and 
+All the images would be converted to base64 format by keeping inline store of images and links to these images would be provided by the file-loader
+
+111)
+render() {
+      return <WrappedComponent {...this.props} />;
+    }
+
+112)JSX Prevents Injection Attacks
+It is safe to embed user input in JSX:
+
+const title = response.potentiallyMaliciousInput;
+// This is safe:
+const element = <h1>{title}</h1>;
+
+By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application. Everything is converted to a string before being rendered. This helps prevent XSS (cross-site-scripting) attacks.
+
+113)Steps of JSX conversionn
+
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+);
+
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
+
+/ Note: this structure is simplified
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Hello, world!'
+  }
+};
+
+114)<div id="root"></div>
+We call this a “root” DOM node because everything inside it will be managed by React DOM.
+
+115)To render a React element into a root DOM node, pass both to ReactDOM.render():
+
+const element = <h1>Hello, world</h1>;
+ReactDOM.render(element, document.getElementById('root'));
+
+ReactDOM(What?,Where?)
+
+116)When React sees an element representing a user-defined component, it passes JSX attributes to this component as a single object. We call this object “props”.
+
+const element = <Welcome name="Sara" />;
+
+117)React treats components starting with lowercase letters as DOM tags. For example, <div /> represents an HTML div tag, but <Welcome /> represents a component and requires Welcome to be in scope.
+
+118)Whether you declare a component as a function or a class, it must never modify its own props. Consider this sum function:
+
+function sum(a, b) {
+  return a + b;
+}
+Such functions are called “pure” because they do not attempt to change their inputs, and always return the same result for the same inputs.
+In contrast, this function is impure because it changes its own input:
+
+function withdraw(account, amount) {
+  account.total -= amount;
+}
+
+119)This is commonly called a “top-down” or “unidirectional” data flow. Any state is always owned by some specific component, and any data or UI derived from that state can only affect components “below” them in the tree.
+
+120)Data flow is unidrectional in Reactjs.
+  - The data or state from the parents will come down to children as PROPS and PROPS cannot be modified by children
+  - The PROPS passed to the children are having LOCAL STATES and won't interfere with the actual state or PROPS
+  - The modification in the STATE should be done in the component which is maintaining the state and no where else. 
+  - The data flows in top to bottom approach
+
+121)JSX -
+  const element = <div className="greeting">hi there</div>
+
+The above is neither string nor javascript but it is JSX
+Babel internally converts the JSX expression to -
+
+const element = React.createElement(
+  'div',
+  {className: 'greeting'},
+  'hi there'
+);
+
+Essentially it creates an object like this
+
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Hello, world!'
+  }
+};
+
+122)
+<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+
+The above two lines are equivalent, and use arrow functions and Function.prototype.bind respectively.
+
+In both cases, the e argument representing the React event will be passed as a second argument after the ID. With an arrow function, we have to pass it explicitly, but with bind any further arguments are automatically forwarded.
+
+123)Lazy loading/Code splitting is one of the most compelling features of webpack. This feature allows you to split your code into various bundles which can then be loaded on demand or in parallel. It can be used to achieve smaller bundles and control resource load prioritization which, if used correctly, can have a major impact on load time.
+Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app. While you haven’t reduced the overall amount of code in your app, you’ve avoided loading code that the user may never need, and reduced the amount of code needed during the initial load.
+The best way to introduce code-splitting into your app is through the dynamic import() syntax.
+
+BEFORE
+import { add } from './math';
+
+console.log(add(16, 26));
+
+AFTER
+import("./math").then(math => {
+  console.log(math.add(16, 26));
+});
+
+124)React.lazy - The React.lazy function lets you render a dynamic import as a regular component.
+
+Before:
+import OtherComponent from './OtherComponent';
+
+After:
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+Suspense is a component required by the lazy function basically used to wrap lazy components. Multiple lazy components can be wrapped with the suspense component. It takes a fallback property that accepts the react elements you want to render as the lazy component is being loaded.
+
+125)Code splitting works only for webpack available applications
+
+126)In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
