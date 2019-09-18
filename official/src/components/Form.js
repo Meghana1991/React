@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
+    constructor(props) {
+        super(props)
+        this.interest = React.createRef()
+    }
+
+    componentDidMount() {
+        this.interest.current.focus();
+    }
+
     render() {
         return (
             <form onSubmit={this.props.submitHandler}>
@@ -14,6 +23,8 @@ class Form extends Component {
                 <input
                     type="text"
                     name="interest"
+                    ref={this.interest}
+
                     onChange={(e) => this.props.changeHandler(e)} /><br /><br />
                 <input type="submit" value="Submit" />
             </form>

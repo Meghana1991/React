@@ -24,7 +24,7 @@
 
 35)ANother way of doing it is by using a wrapper component which just wraps and does nothing
 
-36)Another way from React 16 Onwards is by using REACT.fragment. Wrapping the elements in the React.fragment or just fragment tag
+36)Another way from React 16 Onwards is by using REACT.fragment. Wrapping the elements in the React.fragment or just fragment tag. Imagine there is a scenario where i need to return columns of table. So in such cases I cant use div to wrap elements.
 
 37)If you want to have the element with the style or className then use a wrapper like Auxillary component that picks up the props as the classname of actual component and assigns to children returned
 
@@ -80,6 +80,16 @@ https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/13585862
 This method is a good place to set up any subscriptions. If you do that, don’t forget to unsubscribe in componentWillUnmount().
 
 You may call setState() immediately in componentDidMount(). It will trigger an extra rendering, but it will happen before the browser updates the screen. This guarantees that even though the render() will be called twice in this case, the user won’t see the intermediate state. Use this pattern with caution because it often causes performance issues. In most cases, you should be able to assign the initial state in the constructor() instead. It can, however, be necessary for cases like modals and tooltips when you need to measure a DOM node before rendering something that depends on its size or position.
+
+This form of setState() is also asynchronous, and multiple calls during the same cycle may be batched together. For example, if you attempt to increment an item quantity more than once in the same cycle, that will result in the equivalent of:
+
+Object.assign(
+  previousState,
+  {quantity: state.quantity + 1},
+  {quantity: state.quantity + 1},
+  ...
+)
+
 34)shouldComponentUpdate - it allows to stop the updating process on change of props or state
 This method only exists as a performance optimization. Do not rely on it to “prevent” a rendering, as this can lead to bugs. Use shouldComponentUpdate() to let React know if a component’s output is not affected by the current change in state or props. The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
 35)React hooks are a new way (still being developed) to access the core features of react such as state without having to use classes, in your example if you want to increment a counter directly in the handler function without specifying it directly in the onClick prop, you could do something like:
@@ -97,6 +107,23 @@ and onClick:
 <button onClick={setCount}>
     Click me
 </button>
+
+React.memo is a higher order component. It’s similar to React.PureComponent but for function components instead of classes.
+
+If your function component renders the same result given the same props, you can wrap it in a call to React.memo for a performance boost in some cases by memoizing the result. This means that React will skip rendering the component, and reuse the last rendered result.
+
+function MyComponent(props) {
+  /* render using props */
+}
+function areEqual(prevProps, nextProps) {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+export default React.memo(MyComponent, areEqual);
+
 36)useEffect - is a react hook which combines componentDidMount and ComponentDidUpdate
 Here it gets called on every render. Whenever the virtual DOM changes, the render gets called. Here you can call BE calls.
 27)Differences between componentDidMount and ComponentDidUpdate
@@ -125,6 +152,12 @@ usually clean up work will be done in this cycle. As mentioned above we can use 
 30)Another way to do it is by using react.memo() for functional components
 
 31)shouldComponentUpdate can be used when a certain property in the props of certain component check is present. If the entire props should be checked then use PureComponent which checks the complete props check instead of single property in prop.
+
+shouldComponentUpdate(nextProps) {
+  if (this.props.message === nextProps.message) {
+    return false
+  }
+}
 
 32)Assume that there is a prop like prop.persons. 
 if(nextProps.persons !== prop.persons)
@@ -540,3 +573,296 @@ Suspense is a component required by the lazy function basically used to wrap laz
 125)Code splitting works only for webpack available applications
 
 126)In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
+
+127)In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
+
+128)A simple flaw or error in the application can break the entire application. Inorder to save that, we
+need to catch the errors separately without interrupting the regular flow
+
+Error boundaries do not catch errors for:
+
+Event handlers (learn more)
+Asynchronous code (e.g. setTimeout or requestAnimationFrame callbacks)
+Server side rendering
+Errors thrown in the error boundary itself (rather than its children)
+
+A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static getDerivedStateFromError() or componentDidCatch(). Use static getDerivedStateFromError() to render a fallback UI after an error has been thrown. Use componentDidCatch() to log error information.
+
+129)Static method calls are made directly on the class and are not callable on instances of the class. Static methods are often used to create utility functions.
+
+130)The concept of the react profiler is to collect timing information about components, the time rendered and committed in order to identify when each component actually rendered and at what speed. Basically to explain to you how fast or how slow your application is.
+
+131)Web Components is a suite of different technologies allowing you to create reusable custom elements — with their functionality encapsulated away from the rest of your code — and utilize them in your web apps.
+
+React and Web Components are built to solve different problems. Web Components provide strong encapsulation for reusable components, while React provides a declarative library that keeps the DOM in sync with your data. The two goals are complementary. As a developer, you are free to use React in your Web Components, or to use Web Components in React, or both.Most people who use React don’t use Web Components, but you may want to, especially if you are using third-party UI components that are written using Web Components.
+
+Using Web Components in React
+
+class HelloMessage extends React.Component {
+  render() {
+    return <div>Hello <x-search>{this.props.name}</x-search>!</div>;
+  }
+}
+
+One common confusion is that Web Components use “class” instead of “className”.
+
+Using React in your Web Components
+
+class XSearch extends HTMLElement {
+  connectedCallback() {
+    const mountPoint = document.createElement('span');
+    this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
+
+    const name = this.getAttribute('name');
+    const url = 'https://www.google.com/search?q=' + encodeURIComponent(name);
+    ReactDOM.render(<a href={url}>{name}</a>, mountPoint);
+  }
+}
+customElements.define('x-search', XSearch);
+
+132)Uncontrolled Components - In React, it is called an uncontrolled component because its value can only be set by a user, and not programmatically.
+
+ In most cases, we recommend using controlled components to implement forms. In a controlled component, form data is handled by a React component. The alternative is uncontrolled components, where form data is handled by the DOM itself.
+
+To write an uncontrolled component, instead of writing an event handler for every state update, you can use a ref to get form values from the DOM.In the React rendering lifecycle, the value attribute on form elements will override the value in the DOM. With an uncontrolled component, you often want React to specify the initial value, but leave subsequent updates uncontrolled. To handle this case, you can specify a defaultValue attribute instead of value.
+
+In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically.
+
+this.fileInput = React.createRef();
+<input type="file" ref={this.fileInput} />
+this.fileInput.current.files[0].name
+
+the above 3 lines for file in 3 different places. More info check Form_ref
+
+133)Type Checking In JavaScript: Flow is a static type checker that catches common errors in your application before they run.
+
+As your app grows, you can catch a lot of bugs with typechecking. For some applications, you can use JavaScript extensions like Flow or TypeScript to typecheck your whole application. But even if you don’t use those, React has some built-in typechecking abilities. To run typechecking on the props for a component, you can assign the special propTypes property:
+
+134)Strict mode checks are run in development mode only; they do not impact the production build.
+StrictMode currently helps with:
+
+Identifying components with unsafe lifecycles
+Warning about legacy string ref API usage
+Warning about deprecated findDOMNode usage
+Detecting unexpected side effects
+Detecting legacy context API
+Additional functionality will be added with future releases of React.
+
+135)Sharing of values between the components is known and here you share the function between the components.
+
+<DataProvider render={data => (
+  <h1>Hello {data.target}</h1>
+)}/>
+
+136)The Diffing Algorithm
+
+When diffing two trees, React first compares the two root elements. The behavior is different depending on the types of the root elements.
+
+- Elements Of Different Types
+
+    Whenever the root elements have different types, React will tear down the old tree and build the new tree from scratch. Going from <a> to <img>, or from <Article> to <Comment>, or from <Button> to <div> - any of those will lead to a full rebuild.
+
+    When tearing down a tree, old DOM nodes are destroyed. Component instances receive componentWillUnmount(). When building up a new tree, new DOM nodes are inserted into the DOM. Component instances receive componentWillMount() and then componentDidMount(). Any state associated with the old tree is lost.
+    Any components below the root will also get unmounted and have their state destroyed. For example, when diffing:
+
+    <div>
+      <Counter />
+    </div>
+
+    <span>
+      <Counter />
+    </span>
+    This will destroy the old Counter and remount a new one.
+
+- DOM Elements Of The Same Type
+
+    When comparing two React DOM elements of the same type, React looks at the attributes of both, keeps the same underlying DOM node, and only updates the changed attributes. For example:
+
+    <div className="before" title="stuff" />
+
+    <div className="after" title="stuff" />
+    By comparing these two elements, React knows to only modify the className on the underlying DOM node.
+
+- Recursing On Children
+
+    By default, when recursing on the children of a DOM node, React just iterates over both lists of children at the same time and generates a mutation whenever there’s a difference.
+
+    For example, when adding an element at the end of the children, converting between these two trees works well:
+
+    <ul>
+      <li>first</li>
+      <li>second</li>
+    </ul>
+
+    <ul>
+      <li>first</li>
+      <li>second</li>
+      <li>third</li>
+    </ul>
+    React will match the two <li>first</li> trees, match the two <li>second</li> trees, and then insert the <li>third</li> tree.
+
+    If you implement it naively, inserting an element at the beginning has worse performance. For example, converting between these two trees works poorly:
+
+    <ul>
+      <li>Duke</li>
+      <li>Villanova</li>
+    </ul>
+
+    <ul>
+      <li>Connecticut</li>
+      <li>Duke</li>
+      <li>Villanova</li>
+    </ul>
+
+    React will mutate every child instead of realizing it can keep the <li>Duke</li> and <li>Villanova</li> subtrees intact. This inefficiency can be a problem.
+
+- Keys
+    In order to solve this issue, React supports a key attribute. When children have keys, React uses the key to match children in the original tree with children in the subsequent tree. For example, adding a key to our inefficient example above can make the tree conversion efficient:
+
+    <ul>
+      <li key="2015">Duke</li>
+      <li key="2016">Villanova</li>
+    </ul>
+
+    <ul>
+      <li key="2014">Connecticut</li>
+      <li key="2015">Duke</li>
+      <li key="2016">Villanova</li>
+    </ul>
+    Now React knows that the element with key '2014' is the new one, and the elements with the keys '2015' and '2016' have just moved.
+
+It is important to remember that the reconciliation algorithm is an implementation detail. React could rerender the whole app on every action; the end result would be the same. 
+Just to be clear, rerender in this context means calling render for all components, it doesn’t mean React will unmount and remount them. It will only apply the differences following the rules stated in the previous sections.
+
+137)React Without ES6
+
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+If you don’t use ES6 yet, you may use the create-react-class module instead:
+
+var createReactClass = require('create-react-class');
+var Greeting = createReactClass({
+  render: function() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+});
+
+138)Portals - An API for rendering components outside of your app’s DOM hierarchy.
+Perfect for scenarios where CSS styles are restraining your elements. For example, stacking(z-index) and overflow issues. You could even render things in a new window.
+A brilliant thing about portals is that a component rendered in a portal acts as if it is still in the React tree. It behaves like a normal React child. You can pass it props, it will react to updates etc.
+
+139)When an element type starts with a lowercase letter, it refers to a built-in component like <div> or <span> and results in a string 'div' or 'span' passed to React.createElement. Types that start with a capital letter like <Foo /> compile to React.createElement(Foo) and correspond to a component defined or imported in your JavaScript file.
+
+<MyComponent foo={1 + 2 + 3 + 4} />
+<MyComponent foo={1} />
+
+You can pass a string literal as a prop. These two JSX expressions are equivalent:
+<MyComponent message="hello world" />
+<MyComponent message={'hello world'} />
+
+When you pass a string literal, its value is HTML-unescaped. So these two JSX expressions are equivalent:
+<MyComponent message="&lt;3" />
+<MyComponent message={'<3'} />
+
+Props Default to “True”
+If you pass no value for a prop, it defaults to true. These two JSX expressions are equivalent:
+<MyTextBox autocomplete />
+<MyTextBox autocomplete={true} />
+
+function App2() {
+  const props = {firstName: 'Ben', lastName: 'Hector'};
+  return <Greeting {...props} />;
+}
+return <button className={className} {...other} />;
+
+140)these all render to the same thing:
+
+<div>Hello World</div>
+
+<div>
+  Hello World
+</div>
+
+<div>
+  Hello
+  World
+</div>
+
+<div>
+
+  Hello World
+</div>
+
+141)Booleans, Null, and Undefined Are Ignored
+false, null, undefined, and true are valid children. They simply don’t render. These JSX expressions will all render to the same thing:
+
+<div />
+<div></div>
+<div>{false}</div>
+<div>{null}</div>
+<div>{undefined}</div>
+<div>{true}</div>
+
+This can be useful to conditionally render React elements. This JSX renders the <Header /> component only if showHeader is true:
+<div>
+  {showHeader && <Header />}
+  <Content />
+</div>
+
+142)React is the entry point to the React library. If you load React from a <script> tag, these top-level APIs are available on the React global. If you use ES6 with npm, you can write import React from 'react'. If you use ES5 with npm, you can write var React = require('react').
+
+143)CloneElement()
+React.cloneElement(
+  element,
+  [props],
+  [...children]
+)
+Clone and return a new React element using element as the starting point. The resulting element will have the original element’s props with the new props merged in shallowly. New children will replace existing children. key and ref from the original element will be preserved.
+
+React.cloneElement() is almost equivalent to:
+
+<element.type {...element.props} {...props}>{children}</element.type>
+However, it also preserves refs. This means that if you get a child with a ref on it, you won’t accidentally steal it from your ancestor. You will get the same ref attached to your new element.
+
+144)Constructor is the only place where you should assign this.state directly. In all other methods, you need to use this.setState() instead.
+
+145)getSnapshotBeforeUpdate()
+getSnapshotBeforeUpdate(prevProps, prevState)
+getSnapshotBeforeUpdate() is invoked right before the most recently rendered output is committed to e.g. the DOM. It enables your component to capture some information from the DOM (e.g. scroll position) before it is potentially changed. Any value returned by this lifecycle will be passed as a parameter to componentDidUpdate().
+
+146)In React, all DOM properties and attributes (including event handlers) should be camelCased. For example, the HTML attribute tabindex corresponds to the attribute tabIndex in React. The exception is aria-* and data-* attributes, which should be lowercased. For example, you can keep aria-label as aria-label.
+
+147)checked
+The checked attribute is supported by <input> components of type checkbox or radio. You can use it to set whether the component is checked. This is useful for building controlled components. defaultChecked is the uncontrolled equivalent, which sets whether the component is checked when it is first mounted.
+
+148)dangerouslySetInnerHTML
+dangerouslySetInnerHTML is React’s replacement for using innerHTML in the browser DOM. In general, setting HTML from code is risky because it’s easy to inadvertently expose your users to a cross-site scripting (XSS) attack. So, you can set HTML directly from React, but you have to type out dangerouslySetInnerHTML and pass an object with a __html key, to remind yourself that it’s dangerous. For example:
+
+function createMarkup() {
+  return {__html: 'First &middot; Second'};
+}
+
+function MyComponent() {
+  return <div dangerouslySetInnerHTML={createMarkup()} />;
+}
+
+149)Cross-site scripting (XSS) is a type of computer security vulnerability typically found in web applications. XSS enables attackers to inject client-side scripts into web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same-origin policy. 
+
+15)style in two ways
+// Result style: '10px'
+<div style={{ height: 10 }}>
+  Hello World!
+</div>
+
+or
+
+const divStyle = {
+  color: 'blue',
+  backgroundImage: 'url(' + imgUrl + ')',
+};
+function HelloWorldComponent() {
+  return <div style={divStyle}>Hello World!</div>;
+}

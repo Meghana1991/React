@@ -7,7 +7,12 @@ import Basics2 from './components/Basics2';
 import SplitPane from './components/SplitPane';
 import { Route, Link } from 'react-router-dom'
 import asyncComponent from '../src/hoc/asyncComponent'
-import Lazy from './components/lazy'
+import ErrorHandling from './components/ErrorHandling'
+import Intermediate from './components/Intermediate'
+import FormRef from './components/Form_ref'
+import PropTypesExample from './components/PropTypes'
+import ProfileExample from './components/ProfileExample'
+import ProfileUser from './components/ProfileUser'
 // import RightSide from './components/rightSide'
 
 /**
@@ -58,6 +63,15 @@ class App extends Component {
   }
 
   render() {
+    // React Cloning
+    let cloned = React.cloneElement(
+      FormRef
+    )
+
+    console.log('cloned', cloned) //{$$typeof: Symbol(react.element), type: undefined, key: undefined, ref: undefined, props: {…}, …}
+
+    console.log('Is it Valid ?', React.isValidElement(BasicComponent))
+
     return (
       <div className="App" >
         {/* <BasicComponent user={this.state.name} clickHandler={this.changeName} /> */}
@@ -107,8 +121,40 @@ class App extends Component {
             <AsyncLazy />
           </Suspense>
         )} />
+
+        {/* Error Handling 
+        Refer Codepen - https://codepen.io/meghana1991/pen/abojydj?editors=0010*/}
+        <ErrorHandling>
+          <Intermediate />
+        </ErrorHandling>
+
+        {/* 
+        Form with Ref uncontrolled
+         */}
+        <FormRef />
+
+        {/* Type Checking with PropTypes - Warning: Failed prop type: Invalid prop `name` of type `number` supplied to `PropTypesExample`, expected `string`.*/}
+        <PropTypesExample name={10}></PropTypesExample>
+
+        {/* Profiler for performance monitoring */}
+        <ProfileExample id="Navigation" onRender={this.onRenderCallback}>
+          <ProfileUser />
+        </ProfileExample>
       </div>
     );
+  }
+
+  onRenderCallback(
+    id, // the "id" prop of the Profiler tree that has just committed
+    phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+    actualDuration, // time spent rendering the committed update
+    baseDuration, // estimated time to render the entire subtree without memoization
+    startTime, // when React began rendering this update
+    commitTime, // when React committed this update
+    interactions // the Set of interactions belonging to this update
+  ) {
+    // Aggregate or log render timings...
+    console.log('heyy', phase)
   }
 }
 export default App;

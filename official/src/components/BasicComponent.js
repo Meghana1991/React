@@ -45,4 +45,10 @@ class BasicComponent extends Component {
         )
     }
 }
+//If props.color is not provided, it will be set by default to 'pink':
+
+BasicComponent.defaultProps = {
+    color : "pink"
+}
+
 export default BasicComponent
