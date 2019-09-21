@@ -866,3 +866,27 @@ const divStyle = {
 function HelloWorldComponent() {
   return <div style={divStyle}>Hello World!</div>;
 }
+
+16)A polyfill is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it
+
+17)React 16 depends on the collection types Map and Set. If you support older browsers and devices which may not yet provide these natively (e.g. IE < 11) or which have non-compliant implementations (e.g. IE 11), consider including a global polyfill in your bundled application, such as core-js or babel-polyfill.
+
+18)The event handlers will be passed as instances of SyntheticEvent, a cross-browser wrapper around the browser’s native event. It has the same interface as the browser’s native event, including stopPropagation() and preventDefault(), except the events work identically across all browsers.
+
+If you find that you need the underlying browser event for some reason, simply use the nativeEvent attribute to get it.
+onChange onInput onInvalid onSubmit
+DOMEventTarget relatedTarget
+onFocus onBlur
+onClick onContextMenu onDoubleClick onDrag onDragEnd onDragEnter onDragExit
+
+suppressHydrationWarning - If you use server-side React rendering, normally there is a warning when the server and the client render different content. However, in some rare cases, it is very hard or impossible to guarantee an exact match. For example, timestamps are expected to differ on the server and on the client.
+
+19)React.memo is used to wrap the component and doesnot cause render unless the props are changed.Mostly when we are just rendering the html code
+
+20)There are functional and class based components. Inorder to change state, we use class based as u can use redux methods inside class based components. In functional components we would max display or pass events or the data across but not manipulate the state. Now there is something called as React Hooks which would make a function capable to change the state and using react hooks, we can avoid class based completely. React hooks let you create lifecycles and also state manipulation
+
+Hooks are functions that let you “hook into” React state and lifecycle features from function components. Hooks don’t work inside classes — they let you use React without classes
+
+21)React hooks can manage state where state need not be an object but can be anything like boolean or string anything
+
+22)useState returns initial state with the callback to modify the state.
