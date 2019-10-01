@@ -1,0 +1,8 @@
+StickyNote App
+
+    - Add new Sticky note
+    - Remove Sticky note
+    - Change Background Color
+    - Add multiple Sticky Notes
+    - Edit the same Note
+    - Focus Sticky

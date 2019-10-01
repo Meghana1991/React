@@ -7,20 +7,28 @@
 
 33)DOM RENDERING -
 
-- React's render() DOESNOT render the HTML/JSX to the real DOM instead it updates in the virtual dom.The render() function's code doesnot hit the real dom directly. Again on top of it we can stil handle the changes of the render()'s virtual dom's updation or not using shouldComponentUpdate
+At any point of time, the react will have 2 virtual doms. The dff check is performed and the reconciliation occurs and finds the changed element. The changed element is rendered in the real dom. Why virtual dom because the virtual doms are cheaper because they are just javascript objects, Every change in the vitual dom neednot be expensive as it is not that we are painting the dom and rerendering the entire dom painting it in the browser etc would be costlier. Hence the virtual dom is compared and then changed portion alone is changed in the actual dom. Sometimes we change state and the state is not even in the dom, that case the render in our code triggers the virtual dom comparison and there wont be any change and it is ignored.
 
--render() when called compares previous or old virtual dom with the new virtual dom which is just formed by render function. It compares and checks if anything is changed in virtual doms, if yes then only it modifies the real dom
+React creates a tree of custom objects representing a part of the DOM. For example, instead of creating an actual DIV element containing a UL element, it creates a React.div object that contains a React.ul object. It can manipulate these objects very quickly without actually touching the real DOM or going through the DOM API. Then, when it renders a component, it uses this virtual DOM to figure out what it needs to do with the real DOM to get the two trees to match.
 
--The virtual dom is just dom representation in the javascript.It keeps both the virtual doms in the javascript only.The elements are all represented in the pure javascript. These virtual doms are compared and if the difference exists then the real dom is updated
+You can think of the virtual DOM like a blueprint. It contains all the details needed to construct the DOM, but because it doesn't require all the heavyweight parts that go into a real DOM, it can be created and changed much more easily.
 
--The rerendering after javascript virtual doms comparison again rerender COMPLETE real dom BUT does only those which are changed based on the difference example if button text changes then it updates only button text instead of rerendering the button
+The virtual dom is like a blueprint or architecture which will have all the calculations so as how to exactly change that portion of the real dom
+
+-render() when called compares previous or old virtual dom with the new virtual dom which is just formed by render function. It compares and checks if anything is changed in virtual doms, if yes then only it modifies the real dom and that too only the affected or changed portion
+
+-The virtual dom is just dom representation in the javascript as javascript is faster.It keeps both the virtual doms in the javascript only.The elements are all represented in the pure javascript. These virtual doms are compared and if the difference exists then the real dom is updated
+
+- React's render() DOESNOT render the HTML/JSX to the real DOM instead it updates in the virtual dom.The render() function's code doesnot hit the real dom directly. Again on top of it we can stil handle the changes of the render()'s virtual dom's updation of not using shouldComponentUpdate
+
+-The rerendering after javascript virtual doms comparison again rerender not COMPLETE real dom BUT does only those which are changed based on the difference example if button text changes then it updates only button text instead of rerendering the button
 
 3)The component App should return some html code always. Any component is expected to do this.
 4)Whatevr HTML code writen inside the render() will be internally converted to React.createElement. Check files for example
 5)The JSX expects the element to have className instead class. The reason being that the JSX converts the HTML to react element internally in the javascript and the keyword class is reserved word in javascript so we need to use className
 6)The JSX expects the element we are defining to be under root tag and not like siblings
 
-34)JSX is javascript so inorder to have multiple adjacent tags WITHOUT HAVING to be under same div, can be handled like [el1,el2]
+34)JSX is javascript so inorder to have multiple adjacent tags WITHOUT HAVING to be under same div, can be handled like [el1,el2].Prior to the React 16 it was like that but now we can use React.Fragment
 
 35)ANother way of doing it is by using a wrapper component which just wraps and does nothing
 
@@ -28,7 +36,6 @@
 
 37)If you want to have the element with the style or className then use a wrapper like Auxillary component that picks up the props as the classname of actual component and assigns to children returned
 
-7)By using ES6 we can get access to this keyword
 8)React considers div as HTML whereas Div as custom component. Hence we need to give custom component with Caps at first letter
 9)When creating components, you have the choice between two different ways:
 
@@ -52,22 +59,38 @@ props  allow you to pass data from a parent (wrapping) component to a child (emb
 14.5)Javascript inside the JSX is written inside {} always whether it is condition or is a variable binding or a state anything
 
 15)React always watches for state or props and compares the old to new value and changes in the DOM
+
 16) The state and setState comes along with Component extends which works only for class based
+
+8)In functional components, we cant change state as we cant use setState in it because we are not extending the Component
+
 17)One can pas methods and vars to the custom tag / component
-18)One cannot access state inside the function code
+
+18)One cannot access state inside the function code but can access props. Whereas in class you can get access to state as well as props using this.props
+
 19)https://stackoverflow.com/questions/34361379/are-arrow-functions-and-functions-equivalent-exchangeable
+ 
 20)render() gets called everytime the dom is rendered.
+
 21)writing the if cond inside the JSX is not allowed as it accepts only simple statements
+
 22)Map transforms a particular array into something else
+
 23)React generally re renders everything in the DOM, its good to mention a KEY property which tells React to keep track and CHANGE only when CHANGE is seen and not re render always to dom
+
 24)Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity
+
 25)React Developer Tools is the extension used for debugging
+
 26)ErrorBoundries for error or exception handling like api call failures etc
+
 27)The literal difference before React 16 is that one has state, and the other doesn't. That means the stateful components are keeping track of changing data, while stateless components print out what is given to them via props, or they always render the same thing. Notice the stateless component is written as a function.
+
 28)Now the stataful components are not just class but can be anything that manages state and stateless are not always functional component in React 16+. Even functional component can manage state in React 16+. But functional component are usually presentational which doesnot manage state and are for showing in ui for fancy
-29)state and props both can be used in the class component.
+
 30)Component Lifecycle as name suggests comes only in the Class based. In functional however you should be using react hooks there
 https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/13585862#overview
+
 31)LifeCycle Create
   constructor
     > getDerivedStateFromProps
@@ -75,6 +98,7 @@ https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/13585862
         > child components
           > componentDidMount
 32)getDerivedStateFromProps is invoked right before calling the render method, both on the initial mount and on subsequent updates. It should return an object to update the state, or null to update nothing.Very rarely used
+
 33)componentDidMount() is invoked immediately after a component is mounted (inserted into the tree). Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
 
 This method is a good place to set up any subscriptions. If you do that, don’t forget to unsubscribe in componentWillUnmount().
@@ -92,6 +116,28 @@ Object.assign(
 
 34)shouldComponentUpdate - it allows to stop the updating process on change of props or state
 This method only exists as a performance optimization. Do not rely on it to “prevent” a rendering, as this can lead to bugs. Use shouldComponentUpdate() to let React know if a component’s output is not affected by the current change in state or props. The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
+
+50)Components 1 liner -
+render()
+As the name suggests it handles the rendering of your component to the UI. It happens during the mounting and updating of your component.React requires that your render() is pure. Pure functions are those that do not have any side-effects and will always return the same output when the same inputs are passed. This means that you can not setState() within a render().You cannot modify the component state within the render().
+
+componentDidMount() is called as soon as the component is mounted and ready. This is a good place to initiate API calls, if you need to load data from a remote endpoint.componentDidMount() allows the use of setState(). Calling the setState() here will update state and cause another rendering but it will happen before the browser updates the UI. This is to ensure that the user will not see any UI updates with the double rendering.
+
+componentWillUnmount()
+As the name suggests this lifecycle method is called just before the component is unmounted and destroyed. If there are any cleanup actions that you would need to do, this would be the right spot.You cannot modify the component state in componentWillUnmount lifecycle.
+
+shouldComponentUpdate()
+This lifecycle can be handy sometimes when you don’t want React to render your state or prop changes.
+
+static getDerivedStateFromProps()
+It is called just before calling the render() method.This is a static function that does not have access to “this“.  getDerivedStateFromProps() returns an object to update state in response to prop changes. It can return a null if there is no change to state.
+
+getSnapshotBeforeUpdate()
+getSnapshotBeforeUpdate() is another new lifecycle method introduced in React recently. This will be a safer alternative to the previous lifecycle method componentWillUpdate().
+It is called right before the DOM is updated. The value that is returned from getSnapshotBeforeUpdate() is passed on to componentDidUpdate().
+Resizing the window during an async rendering is a good use-case of when the getSnapshotBeforeUpdate() can be utilized.
+As the name says, the getSnapshotBeforeUpdate is called before componentDidUpdate
+
 35)React hooks are a new way (still being developed) to access the core features of react such as state without having to use classes, in your example if you want to increment a counter directly in the handler function without specifying it directly in the onClick prop, you could do something like:
 ...
 const [count, setCounter] = useState(0);
@@ -112,6 +158,12 @@ React.memo is a higher order component. It’s similar to React.PureComponent bu
 
 If your function component renders the same result given the same props, you can wrap it in a call to React.memo for a performance boost in some cases by memoizing the result. This means that React will skip rendering the component, and reuse the last rendered result.
 
+const MyComponent = React.memo(function MyComponent(props) {
+  /* only rerenders if props change */
+});
+
+By default it will only shallowly compare complex objects in the props object. If you want control over the comparison, you can also provide a custom comparison function as the second argument.
+
 function MyComponent(props) {
   /* render using props */
 }
@@ -126,6 +178,7 @@ export default React.memo(MyComponent, areEqual);
 
 36)useEffect - is a react hook which combines componentDidMount and ComponentDidUpdate
 Here it gets called on every render. Whenever the virtual DOM changes, the render gets called. Here you can call BE calls.
+
 27)Differences between componentDidMount and ComponentDidUpdate
 componentDidMount()
 
@@ -198,7 +251,7 @@ If my current path is example.com/detail/new-post and when i use absolute path i
 
 52)The route to="/:id" means anything after the / will be falling in this route. Assume that there is to="/some-post" which will also come under this. Temporary solution is to place the to="/some-post" first and then the "/:id" as the parsing happens from top to bottom
 
-54)The /:id and /something will always load its contents. Both would be loaded when url hits. To overcome this we need to use Switch will tells React router to always consider the each route as unique and consider the first occurance always. Here the order matters a lot.
+54)The /:id and /something will always load its contents. Both would be loaded when url hits. To overcome this we need to use Switch will tell React router to always consider the each route as unique and consider the first occurance always. Here the order matters a lot.
 
 55)We can navigate to a particular route using <Link to> or by programmatic way.
 
@@ -232,6 +285,8 @@ ANother way of making the history push work like redirect is by using history re
 67)Each component would have connect() which will have params like which part slice of state to modify and which actions are going to be displayed by component
 
 68)connect accepts multiple args where the first stands for the piece of state to be listened to and next will be the fn to dispatch
+
+connect(listen,changeToBeDone)
 
 69)in Reducer, we are using arr.concat instead of arr.push because push manipulates the original array where as the concat creates a new array with copy of the contents
 
@@ -377,6 +432,27 @@ The parent component(s) will have a container for the state of your app (typical
 99)I want the initialState of the store to have the response of API.The index.js where the store is initialized createStore accepts reducer and initialState as second param. Here we make use of middleware
 
 100)To modify the local state we use setState and to modify the store we use redux action
+
+80)React redux is Unidirectional flow. 
+
+VIEW -> ACTIONS
+^         /
+ \       v 
+   STATE
+
+    Data flows in single direction. 
+    state is passed to the view and to child components
+    actions are triggered by the view
+    actions can update the state
+    the state change is passed to the view and to child components
+
+The view is a result of the application state. State can only change when actions happen. When actions happen, the state is updated.
+
+A state is always owned by one Component. Any data that’s affected by this state can only affect Components below it: its children.
+
+Changing state on a Component will never affect its parent, or its siblings, or any other Component in the application: just its children.
+
+This is the reason that the state is often moved up in the Component tree, so that it can be shared between components that need to access it.
 
 101)reactjs follows some guidelines like WCAG - web content accessibility guidelines which means it is set of rules to be followed for any website for anyone.Web accessibility (also referred to as a11y) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages. WCAG includes some of the rules like alternative text for images, subtitles for video.
 
@@ -547,6 +623,7 @@ The above two lines are equivalent, and use arrow functions and Function.prototy
 In both cases, the e argument representing the React event will be passed as a second argument after the ID. With an arrow function, we have to pass it explicitly, but with bind any further arguments are automatically forwarded.
 
 123)Lazy loading/Code splitting is one of the most compelling features of webpack. This feature allows you to split your code into various bundles which can then be loaded on demand or in parallel. It can be used to achieve smaller bundles and control resource load prioritization which, if used correctly, can have a major impact on load time.
+
 Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app. While you haven’t reduced the overall amount of code in your app, you’ve avoided loading code that the user may never need, and reduced the amount of code needed during the initial load.
 The best way to introduce code-splitting into your app is through the dynamic import() syntax.
 
@@ -581,7 +658,7 @@ need to catch the errors separately without interrupting the regular flow
 
 Error boundaries do not catch errors for:
 
-Event handlers (learn more)
+Event handlers
 Asynchronous code (e.g. setTimeout or requestAnimationFrame callbacks)
 Server side rendering
 Errors thrown in the error boundary itself (rather than its children)
@@ -592,9 +669,27 @@ A class component becomes an error boundary if it defines either (or both) of th
 
 130)The concept of the react profiler is to collect timing information about components, the time rendered and committed in order to identify when each component actually rendered and at what speed. Basically to explain to you how fast or how slow your application is.
 
-131)Web Components is a suite of different technologies allowing you to create reusable custom elements — with their functionality encapsulated away from the rest of your code — and utilize them in your web apps.
+131)Web Components is a suite of different technologies allowing you to create reusable custom elements — with their functionality encapsulated away from the rest of your code — and utilize them in your web apps. We can create custom element as well here
 
 React and Web Components are built to solve different problems. Web Components provide strong encapsulation for reusable components, while React provides a declarative library that keeps the DOM in sync with your data. The two goals are complementary. As a developer, you are free to use React in your Web Components, or to use Web Components in React, or both.Most people who use React don’t use Web Components, but you may want to, especially if you are using third-party UI components that are written using Web Components.
+
+Web components consists of three main technologies - 
+
+Custom elements: A set of JavaScript APIs that allow you to define custom elements and their behaviour, which can then be used as desired in your user interface.
+
+Shadow DOM: A set of JavaScript APIs for attaching an encapsulated "shadow" DOM tree to an element — which is rendered separately from the main document DOM — and controlling associated functionality. In this way, you can keep an element's features private, so they can be scripted and styled without the fear of collision with other parts of the document.
+
+HTML templates: The <template> and <slot> elements enable you to write markup templates that are not displayed in the rendered page. These can then be reused multiple times as the basis of a custom element's structure.
+
+STEPS - 
+
+  1)Create a class or a function
+  2)Register your new custom element using the CustomElementRegistry.define() method, passing it the element name to be defined, the class or function in which its functionality is specified, and optionally, what element it inherits from.
+  3)If required, attach a shadow DOM to the custom element using Element.attachShadow() method. Add child elements, event listeners, etc., to the shadow DOM using regular DOM methods.
+  4)If required, define an HTML template using <template> and <slot>. Again use regular DOM methods to clone the template and attach it to your shadow DOM.
+  5)Use your custom element wherever you like on your page, just like you would any regular HTML element.
+
+https://developer.mozilla.org/en-US/docs/Web/Web_Components
 
 Using Web Components in React
 
@@ -890,3 +985,26 @@ Hooks are functions that let you “hook into” React state and lifecycle featu
 21)React hooks can manage state where state need not be an object but can be anything like boolean or string anything
 
 22)useState returns initial state with the callback to modify the state.
+
+23)To interact with database we can either use axios or use fetch javascript method.
+
+24)useEffect is like componentDidMount + ComponentDidUpdate + componentDidUnmount  cycle in class lifecycle hook. This gets called for every rerender and also once the component is loaded initially
+
+25)useEffect second param is an array which indicates that the hook is dependent with the array. Whenever the array changes or rerenders the hook gets called. If nothing is passed in the second param then it gets called for componentDidMount and every time the render happens with componentDidUpdate
+
+26)useCallback - Whenever the component rerenders due the some action, then the entire functions in the component.js file will get recreated. Because of this the function might go to infinite loop.To avoid it we need to use cache mechanism which would cache the function which we have wrapped inside the useCallback instead or recreating
+
+27)Best part about the hooks is that we can have multiple states and multiple lifecycles.The state is not restricted to be object but anything. The componentDidMount can be used multiple times representing multiple scenarios. Unlike the class based the entire logic goes to single componentDidMount, here we can create multiple useEffects
+
+28)class based components - Note how we have to duplicate the code between these two lifecycle methods in class.
+componentDidMount() {
+  document.title = `You clicked ${this.state.count} times`;
+}
+
+componentDidUpdate() {
+  document.title = `You clicked ${this.state.count} times`;
+}
+
+This is because in many cases we want to perform the same side effect regardless of whether the component just mounted, or if it has been updated. Conceptually, we want it to happen after every render — but React class components don’t have a method like this. We could extract a separate method but we would still have to call it in two places.
+
+29)context study
